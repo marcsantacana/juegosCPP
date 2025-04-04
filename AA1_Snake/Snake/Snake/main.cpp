@@ -11,11 +11,11 @@
 
 using namespace std;
 
-// Constants.
+// Constants que es fan servir al llarg del joc.
 const int BOARD_WIDTH = 20; // Amplada del tauler.
 // Alçada del tauler.
 const int BOARD_HEIGHT = 10;
-// Retard entre cada fotograma (en mil·lisegons).
+// Retard entre cada fotograma (en milisegons).
 const int FRAME_DELAY_MS = 100;
 // Punts per menjar una fruita.
 const int FRUIT_POINTS = 15;
@@ -28,7 +28,7 @@ const char SNAKE_BODY_CHAR = 'o';
 // Caràcter per a la fruita.
 const char FRUIT_CHAR = 'F';
 
-// Estructura per representar una posició (coordenada) al tauler.
+// Estructura per representar una posició al tauler.
 struct Point {
     // Posició en l'eix X.
     int x;
@@ -48,41 +48,41 @@ Point fruit;
 // Funció per inicialitzar el joc.
 void Setup() {
     gameOver = false;
-    // Inicialitzar la puntuació.
+    // Inicialitza la puntuació.
     score = 0;
-    // Netejar qualsevol serp anterior.
+    // Neteja qualsevol serp anterior.
     snake.clear();
-    // Inicialitzar el cap de la serp al centre.
+    // Inicialitza el cap de la serp al centre.
     snake.push_back({BOARD_WIDTH / 2, BOARD_HEIGHT / 2});
-    // Col·locar la fruita en una posició aleatòria.
+    // Col·loca la fruita en una posició aleatòria.
     fruit.x = rand() % BOARD_WIDTH;
     fruit.y = rand() % BOARD_HEIGHT;
 }
 
 // Funció per dibuixar el tauler.
 void Draw() {
-    // Netejar la pantalla. Si ho corregeixes amb Linux posa "clear".
+    // Neteja la pantalla. Si corregeixes el programa amb Linux posa "clear".
     system("cls");
-    // Mostra la puntuació.
-    cout << "Puntuació: " << score << endl;
-    // Recórrer el tauler i dibuixar els elements.
+    // Mostra la puntuació. No poso accent perque a la terminal no es veu bé.
+    cout << "Puntuacio: " << score << endl;
+    // Recórre el tauler i dibuixar els elements.
     for (int y = 0; y < BOARD_HEIGHT; y++) {
         for (int x = 0; x < BOARD_WIDTH; x++) {
             if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
-                // Dibuixar les parets.
+                // Dibuixa les parets.
                 cout << WALL_CHAR;
             } else if (x == snake[0].x && y == snake[0].y) {
-                // Dibuixar el cap de la serp.
+                // Dibuixa el cap de la serp.
                 cout << SNAKE_HEAD_CHAR;
             } else if (x == fruit.x && y == fruit.y) {
-                // Dibuixar la fruita.
+                // Dibuixa la fruita.
                 cout << FRUIT_CHAR;
             } else {
                 bool printed = false;
-                // Dibuixar el cos de la serp.
+                // Dibuixa el cos de la serp.
                 for (int i = 1; i < snake.size(); i++) {
                     if (x == snake[i].x && y == snake[i].y) {
-                        // Dibuixar el cos.
+                        // Dibuixa el cos.
                         cout << SNAKE_BODY_CHAR;
                         printed = true;
                         break;
@@ -128,7 +128,7 @@ void Logic(int &snakeX, int &snakeY) {
         return;
     }
 
-    // Comprovar col·lisió amb el cos de la serp.
+    // Comprova col·lisió amb el cos de la serp.
     for (int i = 1; i < snake.size(); i++) {
         if (newHead.x == snake[i].x && newHead.y == snake[i].y) {
             // El joc acaba si toca el seu propi cos.
